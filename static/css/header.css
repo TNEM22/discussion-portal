@@ -1,0 +1,29 @@
+.header {
+  width: 100%;
+  height: fit-content;
+  padding: 20px;
+  font-family: Rajdhani;
+  background-color: #008080;
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile h3 {
+  margin-right: 10px;
+  text-transform: capitalize;
+}
+
+img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+}

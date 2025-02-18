@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discussion Portal</title>
+    <link rel="stylesheet" href="base.css" />
+    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="buttons.css" />
+    <link rel="stylesheet" href="header.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <%- include('header', { name: name, email: email }); %>
+      <div class="main">
+        <div class="questions-field">
+          <div class="search-box btn">
+            <button>New Question form</button>
+            <input
+              type="text"
+              autocomplete="off"
+              placeholder="search questions..."
+            />
+            <div class="starred">
+              <i class="fa fa-star-o" aria-hidden="true" title="starred"></i>
+              <i
+                class="fa fa-star hide"
+                aria-hidden="true"
+                title="unstarred"
+              ></i>
+            </div>
+          </div>
+          <div class="question-pane">
+            <div class="all-questions"></div>
+            <div class="not-found question hide" id="not-found">
+              <h3>No match found</h3>
+            </div>
+          </div>
+        </div>
+        <div class="form-field">
+          <div class="question-form">
+            <form onsubmit="return false">
+              <h2>Welcome to Discussion Portal !</h2>
+              <p>Enter a subject and question to get started</p>
+              <input
+                type="text"
+                required="true"
+                autocomplete="off"
+                placeholder="Subject"
+              />
+              <textarea
+                required="true"
+                rows="7"
+                placeholder="Question"
+              ></textarea>
+              <div class="btn">
+                <button>Submit</button>
+              </div>
+            </form>
+          </div>
+          <div class="response-form hide">
+            <div class="question-tab" id="q1">
+              <h3>Question</h3>
+              <div class="question">
+                <div class="title">JSON &amp; Web storage</div>
+                <div class="desc">How to use Web Storage</div>
+                <div class="timer" timestamp="1738648100463">
+                  Added few seconds ago.
+                </div>
+              </div>
+              <div class="btn">
+                <button name="resolve">Resolve</button>
+              </div>
+              <h3>Response</h3>
+              <div class="responses">
+                <div class="response" id="1:1">
+                  <span class="title">Amit</span>
+                  <span class="desc"
+                    >Local storage only store the strings, so storing objects
+                    requires that they be turned into strings using JSON.</span
+                  >
+                  <span class="options">
+                    <p>0</p>
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="response-form-tab">
+                <form onsubmit="return false">
+                  <h3>Add Response</h3>
+                  <input
+                    type="text"
+                    required="true"
+                    autocomplete="off"
+                    placeholder="Subject"
+                  />
+                  <textarea
+                    required="true"
+                    rows="7"
+                    placeholder="Solution"
+                  ></textarea>
+                  <div class="btn">
+                    <button name="add-response">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="home.js"></script>
+  </body>
+</html>

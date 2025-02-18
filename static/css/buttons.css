@@ -1,0 +1,49 @@
+.btn button,
+.btn a {
+  padding: 10px 20px 10px 20px;
+  font-size: 1.2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  border: 2px solid #007bff;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+
+.btn button:hover,
+.btn a:hover {
+  background-color: #0064cf;
+  border-color: #0064cf;
+}
+
+.btn button:active,
+.btn a:active {
+  color: #fff;
+  box-shadow: rgba(0, 123, 255, 0.45) 0px 0px 0px 5px;
+  background-color: #0064cf;
+}
+
+.logout-btn button,
+.logout-btn a {
+  background-color: rgba(180, 0, 0, 1);
+  border-color: rgba(180, 0, 0, 1);
+  transition: all 150ms;
+}
+
+.logout-btn button:hover,
+.logout-btn a:hover {
+  background-color: rgba(180, 180, 0, 1);
+  border-color: rgba(180, 180, 0, 1);
+  box-shadow: rgba(180, 0, 0, 1) 3px 3px;
+  transform: translateX(-3px) translateY(-3px);
+}
+
+.logout-btn button:active,
+.logout-btn a:active {
+  background-color: rgba(180, 0, 0, 1);
+  border-color: rgba(180, 0, 0, 1);
+  box-shadow: rgba(180, 0, 0, 1) 0px 0px;
+  transform: translateX(0px) translateY(0px);
+}
