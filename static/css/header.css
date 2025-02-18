@@ -20,10 +20,61 @@
   text-transform: capitalize;
 }
 
-img {
+#profilePic {
   height: 50px;
   width: 50px;
   border-radius: 50%;
   margin-right: 10px;
   cursor: pointer;
+}
+
+.profile-info {
+  display: none;
+  position: absolute;
+  background-color: #3b3b3b;
+  /* padding: 5px; */
+  border-radius: 5px;
+  width: 150px;
+  right: 70px;
+  flex-flow: column;
+}
+
+.profile-info::before {
+  content: '';
+  position: absolute;
+  border-width: 0 12px 12px 12px;
+  border-style: solid;
+  border-color: transparent transparent #3b3b3b transparent;
+  top: -12px;
+  right: 62px;
+}
+
+.img-container {
+  width: 150px;
+}
+
+.profile-info img {
+  width: 150px;
+  height: 150px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.img-container i {
+  top: 0;
+  left: 0;
+  padding: 5px 2px 2px 5px;
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  background-color: #3b3b3b;
+  border-top-left-radius: 5px;
+}
+
+.profile-info span {
+  font-weight: bold;
+}
+
+.profile-info .info {
+  padding: 5px;
 }

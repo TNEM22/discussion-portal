@@ -692,3 +692,17 @@ function updateTimers() {
 }
 setTimeout(updateTimers, 100);
 setInterval(updateTimers, 1000 * 10); // Update Timer runs after 10 secs.
+
+document.addEventListener('click', (e) => {
+  const profilePic = document.getElementById('profilePic');
+  const profileInfo = document.getElementById('profileInfo');
+  if (profilePic.contains(e.target)) {
+    if (profileInfo.style.display == 'flex') {
+      profileInfo.style.display = 'none';
+    } else {
+      profileInfo.style.display = 'flex';
+    }
+  } else if (!profileInfo.contains(e.target)) {
+    profileInfo.style.display = 'none';
+  }
+});
