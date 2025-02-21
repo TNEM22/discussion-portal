@@ -2,23 +2,43 @@
   <h1>Discussion Portal</h1>
   <div class="profile">
     <h3>Welcome, <%= name %></h3>
+
     <div class="profile-container">
       <img
-        src="user.jpg"
+        src="../imgs/user.jpg"
         alt="User Image"
         id="profilePic"
         title="<%= email %>"
       />
       <div class="profile-info" id="profileInfo">
-        <div class="img-container">
-          <img src="user.jpg" alt="User Image" />
-          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-        </div>
+        <img src="../imgs/user.jpg" alt="User Image" id="user-img" />
+        <form
+          onsubmit="return false"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <input
+            type="file"
+            name="profileImg"
+            id="imgUpload"
+            accept="image/*"
+            hidden
+          />
+          <div id="drop_zone" class="drop-container">
+            <div class="btn">
+              <button name="upload">Upload</button>
+            </div>
+            <div class="btn logout-btn">
+              <button name="cancel">Cancel</button>
+            </div>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+          </div>
+        </form>
         <div class="info">
           <span>Name:</span>
-          <div>Raj Mahale</div>
+          <div id="profile-name">Raj Mahale</div>
           <span>Email:</span>
-          <div>raj@mail.com</div>
+          <div id="profile-email">raj@mail.com</div>
         </div>
       </div>
     </div>

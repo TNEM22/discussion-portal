@@ -1,5 +1,7 @@
 let discussions = null;
 const email = document.cookie.split(' ')[1].split('=')[1].replace('%40', '@');
+const profilePic = document.getElementById('profilePic');
+const user_img = document.getElementById('user-img');
 
 function createDiscussion(subject, question, cb) {
   let id = Date.now();
@@ -143,6 +145,12 @@ function loadDiscussion() {
     .then((data) => {
       discussions = data.discussions;
       const stars = data.stars.split(';');
+      const profileImgUrl = data.userImgUrl;
+      profilePic.src = 'imgs/' + profileImgUrl;
+      user_img.src = 'imgs/' + profileImgUrl;
+      document.getElementById('profile-email').innerText = email;
+      document.getElementById('profile-name').innerText = data.name;
+
       if (discussions != null && discussions != undefined) {
         for (let dis_id in discussions) {
           let discussion = discussions[dis_id];
@@ -694,7 +702,6 @@ setTimeout(updateTimers, 100);
 setInterval(updateTimers, 1000 * 10); // Update Timer runs after 10 secs.
 
 document.addEventListener('click', (e) => {
-  const profilePic = document.getElementById('profilePic');
   const profileInfo = document.getElementById('profileInfo');
   if (profilePic.contains(e.target)) {
     if (profileInfo.style.display == 'flex') {
@@ -706,3 +713,114 @@ document.addEventListener('click', (e) => {
     profileInfo.style.display = 'none';
   }
 });
+
+const profileInfo = document.getElementById('profileInfo');
+const drop_zone = document.getElementById('drop_zone');
+const upload_btn = document.querySelector('button[name="upload"]');
+const cancel_btn = document.querySelector('button[name="cancel"]');
+const img_upload = document.getElementById('imgUpload');
+
+const defaultBg = "url('../imgs/upload_user.jpg')";
+let previewImageURL = '';
+
+profileInfo.addEventListener('click', (e) => {
+  // console.log(e.target.tagName);
+  if (e.target.tagName == 'I') {
+    // console.log((e.target.previousSibling.previousSibling.style.opacity = 0));
+    e.stopPropagation();
+    const val = user_img.style.display;
+    if (val != 'none') {
+      user_img.style.display = 'none';
+    } else {
+      user_img.style.display = 'block';
+    }
+  } else if (e.target.id == 'drop_zone') {
+    img_upload.click();
+  }
+});
+
+drop_zone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  drop_zone.style.backgroundImage = 'none';
+});
+
+drop_zone.addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  drop_zone.style.backgroundImage = defaultBg;
+});
+
+let droppedFile = null;
+drop_zone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  droppedFile = e.dataTransfer.files[0];
+  if (!droppedFile || !droppedFile.type.startsWith('image/')) {
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    previewImageURL = event.target.result;
+    // Set the preview image as the background
+    drop_zone.style.backgroundImage = `url(${previewImageURL})`;
+    // Show the upload and cancel buttons
+    toggleButtons('show');
+  };
+  reader.readAsDataURL(droppedFile);
+});
+
+img_upload.addEventListener('change', (e) => {
+  // console.log(img_upload.files);
+  // console.log(e.target.files);
+  droppedFile = e.target.files[0];
+  if (!droppedFile || !droppedFile.type.startsWith('image/')) {
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    previewImageURL = event.target.result;
+    // Set the preview image as the background
+    drop_zone.style.backgroundImage = `url(${previewImageURL})`;
+    // Show the upload and cancel buttons
+    toggleButtons('show');
+  };
+  reader.readAsDataURL(droppedFile);
+});
+
+upload_btn.addEventListener('click', (e) => {
+  // console.log('uploading...');
+  const formData = new FormData();
+  formData.append('profileImg', droppedFile);
+
+  fetch('/userImage', {
+    method: 'post',
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // console.log(data);
+      drop_zone.style.backgroundImage = defaultBg;
+      user_img.src = previewImageURL;
+      profilePic.src = previewImageURL;
+      toggleButtons('hide');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+cancel_btn.addEventListener('click', (e) => {
+  // console.log('uploading...');
+  img_upload.value = null;
+  drop_zone.style.backgroundImage = defaultBg;
+  toggleButtons('hide');
+});
+
+function toggleButtons(query) {
+  if (query === 'show') {
+    upload_btn.style.display = 'inline-block';
+    cancel_btn.style.display = 'inline-block';
+  } else if (query === 'hide') {
+    upload_btn.style.display = 'none';
+    cancel_btn.style.display = 'none';
+    user_img.style.display = 'block';
+  }
+}

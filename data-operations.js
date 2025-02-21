@@ -27,9 +27,15 @@ async function saveDiscussionsData(data, cb) {
   return await saveData('./jsons/discussions.json', JSON.stringify(data), cb);
 }
 
+async function deleteFile(filename, cb) {
+  await asyncFs.unlink(filename);
+  cb();
+}
+
 module.exports = {
   loadUsersData,
   loadDiscussionsData,
   saveUsersData,
   saveDiscussionsData,
+  deleteFile,
 };

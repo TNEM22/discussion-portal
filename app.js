@@ -1,12 +1,14 @@
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const morgan = require('morgan');
+const multer = require('multer');
 
 const {
   loadUsersData,
   loadDiscussionsData,
   saveUsersData,
   saveDiscussionsData,
+  deleteFile,
 } = require('./data-operations');
 const protect = require('./middleware/auth');
 
@@ -20,13 +22,37 @@ app.use(morgan('dev'));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/static/templates/');
 
-app.use(express.static('./static/css/'));
-app.use(express.static('./static/js/'));
-app.use(express.static('./static/imgs/'));
+app.use(express.static('./static/'));
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './static/imgs/');
+  },
+  filename: function (req, file, cb) {
+    const new_filename = `${req.cookies.sessionId}-${
+      users[sessions[req.cookies.sessionId].email].name
+    }.${file.originalname.split('.')[1]}`;
+    const curr_filename = users[sessions[req.cookies.sessionId].email].imgUrl;
+    if (curr_filename != 'user.jpg') {
+      deleteFile('./static/imgs/' + curr_filename, () => {
+        users[sessions[req.cookies.sessionId].email].imgUrl = new_filename;
+        saveUsersData(users, () => {
+          cb(null, new_filename);
+        });
+      });
+    } else {
+      users[sessions[req.cookies.sessionId].email].imgUrl = new_filename;
+      saveUsersData(users, () => {
+        cb(null, new_filename);
+      });
+    }
+  },
+});
+const getImage = multer({ storage: storage });
 
 app.get('/', (req, res) => {
   if (req.cookies.sessionId == undefined && req.cookies.email == undefined) {
@@ -112,6 +138,7 @@ app.post('/signup', async (req, res) => {
         name: user.name.toLowerCase(),
         password: user.password,
         starred: '',
+        imgUrl: 'user.jpg',
       };
       await saveUsersData(users, () => {
         res.status(201).render('login', {
@@ -153,6 +180,8 @@ app.get(
     res.json({
       discussions: discussions,
       stars: users[sessions[req.cookies.sessionId].email].starred,
+      userImgUrl: users[sessions[req.cookies.sessionId].email].imgUrl,
+      name: users[sessions[req.cookies.sessionId].email].name,
     });
   }
 );
@@ -205,6 +234,17 @@ app.post(
     } else {
       res.status(400).end();
     }
+  }
+);
+
+app.post(
+  '/userImage',
+  (req, res, next) => {
+    protect(sessions, req, res, next);
+  },
+  getImage.single('profileImg'),
+  (req, res) => {
+    res.status(200).json(`success`);
   }
 );
 
