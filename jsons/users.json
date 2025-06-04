@@ -1,1 +1,26 @@
-{"raj@mail.com":{"name":"raj","password":"12345","starred":"","imgUrl":"1739969266544-raj.png"},"yash@mail.com":{"name":"yash","password":"12345","starred":"","imgUrl":"1739985931661-yash.jpeg"},"tanmay@mail.com":{"name":"tanmay","password":"12345","starred":"1739853441370;","imgUrl":"user.jpg"},"abhi@mail.com":{"name":"abhishek","password":"12345","starred":"1739853441370;","imgUrl":"1739969685625-abhishek.jpeg"}}
+{
+  "raj@mail.com": {
+    "name": "raj",
+    "password": "12345",
+    "starred": "",
+    "imgUrl": "1740463668213-raj.png"
+  },
+  "yash@mail.com": {
+    "name": "yash",
+    "password": "12345",
+    "starred": "",
+    "imgUrl": "1739985931661-yash.jpeg"
+  },
+  "tanmay@mail.com": {
+    "name": "tanmay",
+    "password": "12345",
+    "starred": "1739853441370;",
+    "imgUrl": "user.jpg"
+  },
+  "abhi@mail.com": {
+    "name": "abhishek",
+    "password": "12345",
+    "starred": "1739853441370;",
+    "imgUrl": "1739969685625-abhishek.jpeg"
+  }
+}
